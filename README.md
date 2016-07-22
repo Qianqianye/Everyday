@@ -1,4 +1,4 @@
 # Everyday
 Everyday coding projects
 
-Day 1 = July 21, 2016
+Starts from July 21, 2016
