@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			body {
+				background-color: #ffffff;
+				margin: 0;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<script src="http://brangerbriz.net/labs/threejs_playGnd/js/three.min.js"></script>
+		<script src="http://brangerbriz.net/labs/threejs_playGnd/js/Detector.js"></script>
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+			
+			var camera, scene, renderer;
+			var geometry, material, mesh;
+
+			function setup() {
+
+				var W = window.innerWidth, H = window.innerHeight;
+				renderer = new THREE.WebGLRenderer();
+				renderer.setSize( W, H );
+				document.body.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
+				camera.position.z = 500;
+
+				scene = new THREE.Scene();
+				
+					for ( var i = 0; i < 100; i ++ ) {
+			
+						
+					map = THREE.ImageUtils.loadTexture('../texturez/proxy.php?url=http://www.fun-free-party-games.com/downloads/Game-Board-8x8-grid(Black,White)(Chess,Checkers,Reversi).gif');
+
+					geometry = new THREE.CubeGeometry( 50, 50, 50 );
+					material = new THREE.MeshBasicMaterial({shading: THREE.FlatShading, color: 0xdcdcdc, map: map, transparent: true, opacity: 1});
+
+					
+					mesh = new THREE.Mesh( geometry, material);
+					mesh.position.x = Math.random() * 1000 - 500;
+					mesh.position.y = Math.random() * 1000 - 500;
+					mesh.position.z = Math.random() * 1000 - 500;
+					mesh.rotation.x = Math.random() * 2 * Math.PI;
+					mesh.rotation.y = Math.random() * 2 * Math.PI;
+					mesh.rotation.z = Math.random() * 2 * Math.PI;
+					scene.add( mesh );
+				
+						
+				}
+				
+			
+
+
+			}
+
+			function draw() {
+
+				requestAnimationFrame( draw );
+				
+				camera.position.z = Math.sin( Date.now() * 0.002 ) * 500;
+				camera.position.y = Math.sin( Date.now() * 0.002 ) * 300;
+				camera.lookAt(mesh.position);
+
+				renderer.render( scene, camera );
+
+			}
+
+			setup();
+			draw();
+
+		</script>
+		
+	</body>
+</html>
