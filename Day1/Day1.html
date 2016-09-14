@@ -15,17 +15,15 @@
 	</head>
 	<body>
 		
-		<script src="../three.min.js"></script>
-		<script src="../Detector.js"></script>
+		<script src="three.min.js"></script>
+		<script src="Detector.js"></script>
 		<script>
 
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-			
 			var camera, scene, renderer;
 			var geometry, material, mesh;
 
 			function setup() {
-
 				var W = window.innerWidth, H = window.innerHeight;
 				renderer = new THREE.WebGLRenderer();
 				renderer.setSize( W, H );
@@ -33,18 +31,13 @@
 
 				camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
 				camera.position.z = 500;
-
 				scene = new THREE.Scene();
-				
 				
 				// paste your code from the geometryGUI here
 				geometry = new THREE.OctahedronGeometry(150, 0);
 				material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading, wireframe: true, wireframeLinewidth: 1, transparent: true, opacity: 0.44});
 				mesh = new THREE.Mesh(geometry, material);
 				scene.add(mesh);
-
-
-
 			}
 
 			function draw() {
@@ -57,17 +50,11 @@
 				mesh.rotation.z = Date.now() * 0.001;
 				
 				geometry = new THREE.CubeGeometry( 25, 25, 25 );
-
-
-
 				renderer.render( scene, camera );
-
 			}
 
 			setup();
 			draw();
-
-		</script>
-		
+		</script>	
 	</body>
 </html>
