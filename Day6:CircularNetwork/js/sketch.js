@@ -39,21 +39,13 @@
             context.fillStyle = this.color;
             context.fill();
         }
-
         return this;
     };
 
     setup();
     draw();
 
-
-// var playMode = 'sustain';
-// var sample;
-
     function setup() {
-  // soundFormats('mp3', 'ogg');
-  // sample = loadSound('mio-mix-baby-bass.mp3');
-
         var canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
@@ -91,7 +83,6 @@
             MOTION.pauseAll();
             audio.play();
 
-
      //        if (audio.paused)
     	// 	audio.play();
   			// else
@@ -99,8 +90,6 @@
 // sample.play();
 
 }
-
-
 
         document.onmousemove = function(e) {
             if (flag) {
@@ -118,13 +107,6 @@
         }
     }
 
-//     function toggleSound() {
-//   // var audioElem = document.getElementById('audio');
-//   if (audio.paused)
-//     audio.play();
-//   else
-//     audio.pause();
-// }
 
 
     function setupNodes() {
@@ -183,3 +165,4 @@
                 }
         context.restore();
     }
+
