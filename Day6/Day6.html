@@ -5,8 +5,20 @@
     <meta charset="utf-8">
 
     <style type="text/css">
+    body {
+        padding: 0;
+        margin: 0;
+        /*z-index: -3;*/
+    }
 
-    	#title {
+      div {
+        position: absolute;
+        z-index: 100;
+        padding: 10px 0 0 10px;
+        font: 22px Georgia;
+           }
+
+/*        #title {
         position: absolute;
         top: 20px;
         width: 350px;
@@ -15,23 +27,18 @@
         border-radius: 3px;
         font: 22px Georgia;
         padding: 10px;
-        z-index: 3;
-      }
+        z-index: 100;
+      }*/
 
-    body {
-        padding: 0;
-        margin: 0;
-        /*z-index: -3;*/
-    }
 
-	#buttons{
+	   #buttons{
         position: absolute;
         z-index: 5;
         bottom: 5px; 
         /*color: rgba(0,0,0,0.2);*/
-            color: white;
-            border-radius: 4px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        color: white;
+        border-radius: 4px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
         }
 
         #container{
@@ -48,7 +55,7 @@
 
 
 	 <div id="title">
-    Click and drag around to play music
+    <button>Click! You will hear it.</button>
   </div>
 
       <div id="buttons">
