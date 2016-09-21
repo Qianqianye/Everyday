@@ -1,0 +1,49 @@
+body {
+        background-color: #000000;
+        margin: 0;
+        overflow: hidden;
+      }
+
+.node {
+  font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  fill: #dddddd;
+}
+
+.node:hover {
+  fill: #000;
+}
+
+.link {
+  stroke: #55ffe1;
+  stroke-opacity: .5;
+  fill: none;
+  pointer-events: none;
+}
+
+.node:hover,
+.node--source,
+.node--target {
+  font-weight: 700;
+}
+
+.node--source {
+  stroke: #ff3b94;
+}
+
+.node--target {
+  stroke: #a6fd29;
+}
+
+.link--source,
+.link--target {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.link--source {
+  stroke: #a6fd29;
+}
+
+.link--target {
+  stroke: #ff3b94;
+}
