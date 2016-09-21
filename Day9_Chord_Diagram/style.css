@@ -6,11 +6,11 @@ body {
 
 .node {
   font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  fill: #dddddd;
+  fill: #bbb;
 }
 
 .node:hover {
-  fill: #000;
+  fill: #fff;
 }
 
 .link {
@@ -27,11 +27,11 @@ body {
 }
 
 .node--source {
-  stroke: #ff3b94;
+  fill: #ff3b94;
 }
 
 .node--target {
-  stroke: #a6fd29;
+  fill: #a6fd29;
 }
 
 .link--source,
