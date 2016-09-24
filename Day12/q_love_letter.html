@@ -1,0 +1,50 @@
+<html>
+  <head>
+  <title>Q's love letter to you.</title>
+  <meta charset="utf-8">
+       <style>
+       body {
+        background-color: black;
+        margin: 30;
+        overflow: hidden;
+      }
+      h1{
+        color: pink;
+        font-size: 40px;   
+         font-family: monospace;
+      }
+      p {
+        color: white;
+        font-size: 20px;
+        font-family: monospace;
+      }
+  </style>
+  </head>
+  <body>
+    <h1 id="title">My love letter to you:</h1>
+    <p id="someText">Hej, you.</p>
+
+    <script type="text/javascript">
+
+      var n = 0;
+
+      var options = ['I would like to walk around in your mind some day.',
+      'In statistics, the Q-function is the tail probability of the standard normal distribution.',
+      'You are people but you are a special kind of people.',
+      'I like your anxiety [sic]. Period. -- An anonymous poet',
+      'You are sweet, like 0 - - - - - - - | - 10.',
+      'I know I am unloveable, You dont have to tell me.'];
+
+      setInterval(changeText, 1200);
+      function changeText() {
+        n++;
+
+        if (n >= options.length) {
+          n = 0;
+        }
+        var elt = document.getElementById('someText');
+        elt.innerHTML = options[n];
+      }
+    </script>
+  </body>
+</html>
