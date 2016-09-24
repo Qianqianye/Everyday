@@ -2,8 +2,10 @@
             if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
             var camera, scene, renderer;
             var geometry, material, mesh;
+            var mouse = {x: 0, y: 0};
+            var scene = new THREE.Scene(); // initialising the scene
+            scene.background = new THREE.Color( 0xffffff );
             document.addEventListener( 'mousemove', onMouseMove, false );
-
 
             function setup() {
                 var W = window.innerWidth, H = window.innerHeight;
@@ -13,9 +15,7 @@
 
                 camera = new THREE.PerspectiveCamera( 10, W/H, 0.01, 10000 );
                 camera.position.set( 0, 0, 100 );
-                scene = new THREE.Scene();
 
-                
                 geometry = new THREE.OctahedronGeometry(3, 0);
                 material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading, wireframe: true, wireframeLinewidth: 1, transparent: true, opacity: 0.44});
                 mesh = new THREE.Mesh(geometry, material);
@@ -25,7 +25,18 @@
             }
 
             function onMouseMove(event) {
-                mesh.position.set(event.clientX* 0.01, event.clientY* -0.01, 0);
+                event.preventDefault();
+                mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+                // Make the sphere follow the mouse
+                var vector = new THREE.Vector3(mouse.x, mouse.y, 0);
+                vector.unproject( camera );
+                var dir = vector.sub( camera.position ).normalize();
+                var distance = - camera.position.z / dir.z;
+                var pos = camera.position.clone().add( dir.multiplyScalar( distance ) );
+                mesh.position.copy(pos);
+                
             };
 
             function draw() {
