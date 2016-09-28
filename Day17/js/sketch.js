@@ -14,7 +14,8 @@
 			var spotLight1 = createSpotlight( 0xfdfe02 );
 			var spotLight2 = createSpotlight( 0x011efe );
 			var spotLight3 = createSpotlight( 0xfe00f6 );
-			var lightHelper1, lightHelper2, lightHelper3;
+			var spotLight4 = createSpotlight( 0x11dd11 );
+			var lightHelper1, lightHelper2, lightHelper3, lightHelper4;
 			
 			function init() {
 					// info
@@ -35,11 +36,11 @@
 				renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 				renderer.gammaInput = true;
 				renderer.gammaOutput = true;
-				// camera.position.set( 46, 22, - 21 );
 				camera.position.set( 46, 32, - 30 );
 				spotLight1.position.set( 15, 40, 45 );
 				spotLight2.position.set( 0, 40, 35 );
 				spotLight3.position.set( - 15, 40, 45 );
+				spotLight4.position.set( - 10, 40, 35 );
 				matFloor.color.set( 0x808080 );
 				mshFloor.receiveShadow = true;
 				mshFloor.position.set( 0, 0, 0 );
@@ -50,8 +51,8 @@
 				scene.add( mshFloor );
 				scene.add( mshBox );
 				scene.add( ambient );
-				scene.add( spotLight1, spotLight2, spotLight3 );
-				scene.add( lightHelper1, lightHelper2, lightHelper3 );
+				scene.add( spotLight1, spotLight2, spotLight3, spotLight4 );
+				scene.add( lightHelper1, lightHelper2, lightHelper3, lightHelper4 );
 				document.body.appendChild( renderer.domElement );
 				onResize();
 				window.addEventListener( 'resize', onResize, false );
@@ -93,6 +94,7 @@
 				tween( spotLight1 );
 				tween( spotLight2 );
 				tween( spotLight3 );
+				tween( spotLight4 );
 				setTimeout( animate, 5000 );
 			}
 
@@ -101,6 +103,7 @@
 				if ( lightHelper1 ) lightHelper1.update();
 				if ( lightHelper2 ) lightHelper2.update();
 				if ( lightHelper3 ) lightHelper3.update();
+				if ( lightHelper4 ) lightHelper4.update();
 				renderer.render( scene, camera );
 				requestAnimationFrame( render );
 				mshBox.rotation.x = Date.now() * 0.0005;	
