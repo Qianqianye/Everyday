@@ -36,7 +36,7 @@
 				renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 				renderer.gammaInput = true;
 				renderer.gammaOutput = true;
-				camera.position.set( 46, 32, - 30 );
+				camera.position.set( 10, 60, -30 );
 				spotLight1.position.set( 15, 40, 45 );
 				spotLight2.position.set( 0, 40, 35 );
 				spotLight3.position.set( - 15, 40, 45 );
