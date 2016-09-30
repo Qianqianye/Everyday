@@ -1,5 +1,5 @@
-     var _w=900;
-      var _h=900;
+     var _w=window.innerWidth;
+      var _h=window.innerHeight;
       
       var group;
       var container, controls, stats;
@@ -39,11 +39,8 @@
      
       var morphTarget=[];
       var startMorph;
-
       var morphStartedAt;
-
       var targetShapes;
-
 
       function init() {
 
