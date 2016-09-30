@@ -1,4 +1,4 @@
-     var _w=window.innerWidth;
+      var _w=window.innerWidth;
       var _h=window.innerHeight;
       
       var group;
@@ -11,7 +11,7 @@
       var particlePositions;
       var linesMesh;
 
-      var maxParticleCount = 1000;
+      var maxParticleCount = 1500;
       var particleCount = 1000;
       var r = 800;
       var rHalf = r / 2;
@@ -24,7 +24,8 @@
       var effectController = {
         morphing_speed:0.05,
         animate: true,
-        showDots: false,
+        // showDots: false,
+        showDots: true,
         showLines: true,
         anim_speed: 1,
         minDistance: 60,
@@ -35,6 +36,7 @@
 
       init();
       animate();
+      initGUI();
 
      
       var morphTarget=[];
@@ -42,44 +44,57 @@
       var morphStartedAt;
       var targetShapes;
 
-      function init() {
+      function initGUI() {
+        var gui = new dat.GUI();
+        gui.add( effectController, "limitConnections" );
+        gui.add( effectController, "showLines" ).onChange( function( value ) { linesMesh.visible = value; } );
+        gui.add( effectController, "showDots" ).onChange( function( value ) { pointCloud.visible = value; } );     
+        gui.add( effectController, "minDistance", 10, 300 );
+        gui.add( effectController, "particleCount", 0, maxParticleCount, 1 ).onChange( function( value ) {
+          particleCount = parseInt( value );
+          particles.setDrawRange( 0, particleCount );
+        });
+      }
 
+      function init() {
+        // initGUI();
 
         container = document.getElementById( 'container' );
 
         camera = new THREE.PerspectiveCamera( 45, _w / _h, 1, 4000 );
-        camera.position.z = 1150;
+        camera.position.z = 1650;
 
         controls = new THREE.OrbitControls( camera, container );
-
         scene = new THREE.Scene();
-
-
         group = new THREE.Group();
         scene.add( group );
 
+        var material = new THREE.MeshNormalMaterial( { color: 0x000000,transparent:true,opacity:0.5 } );
 
 
-        var material = new THREE.MeshNormalMaterial( { color: 0x242424,transparent:true,opacity:0 } );
+        var octGeom=new THREE.OctahedronGeometry(600, 0);
+        var oct =  new THREE.Mesh( octGeom,material ) ;
+        oct.points=[];
 
-        var pyrmaidGeom=new THREE.CylinderGeometry(0, r/2, r/2, 4, false);
-        var pyramid =  new THREE.Mesh( pyrmaidGeom,material );
-        pyramid.points=[];
+
 
         var boxGeom=new THREE.BoxGeometry( r/2, r/2, r/2);
         var box =  new THREE.Mesh( boxGeom,material ) ;
         box.points=[];
 
-        var sphereGeom= new THREE.SphereGeometry( 300, 32, 32 );
-        var sphere=  new THREE.Mesh( sphereGeom,material ) ;
-        sphere.points=[];
+        targetShapes=[box,oct];
 
-        targetShapes=[sphere,box,pyramid];
+        var helper = new THREE.BoxHelper( new THREE.Mesh( new THREE.BoxGeometry( r, r, r ) ) );
+        helper.material.color.setHex( 0x080808 );
+        helper.material.blending = THREE.AdditiveBlending;
+        helper.material.transparent = true;
+        group.add( helper );
 
 
         var segments = maxParticleCount * maxParticleCount;
 
         positions = new Float32Array( segments * 3 );
+        // colors = new Float32Array( segments * 3 );
         colors = new Float32Array( segments * 3 );
 
         var pMaterial = new THREE.PointsMaterial( {
@@ -141,7 +156,7 @@
         renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( _w,_h );
-        renderer.setClearColor(new THREE.Color(0x110d0e, 1.0));
+        // renderer.setClearColor(new THREE.Color(0x110d0e, 1.0));
 
         renderer.gammaInput = true;
         renderer.gammaOutput = true;
@@ -151,10 +166,8 @@
         stats = new Stats();
         stats.domElement.style.position = 'absolute';
         stats.domElement.style.top = '0px';
-        
 
         window.addEventListener( 'resize', onWindowResize, false );
-
 
       }
 
@@ -167,7 +180,6 @@
 
       }
 
-      
 
       function intersect(cur_point,_target) {
 
@@ -182,7 +194,7 @@
         scene.updateMatrixWorld(); // required, since you haven't rendered yet
         
         var rayIntersects = ray.intersectObjects([_target], true);
-        console.log('rayIntersects',rayIntersects.length)
+        
         if (rayIntersects[0]) {    
           return rayIntersects[0].point;          
         }
@@ -207,7 +219,6 @@
             _targetPoints.push(new THREE.Vector3(particlePositions[ i * 3  ],particlePositions[ i * 3  +1],particlePositions[ i * 3     +2]))
           }
 
-
         }
         
         group.remove( _target );
@@ -224,9 +235,9 @@
           var particleData = particlesData[i];
 
           for(var j=0;j<morphTarget.length;j++){
-            var dx = cur_pos.x + particleData.velocity.x*10 - morphTarget[ j ].x;
-            var dy = cur_pos.y + particleData.velocity.y*10  - morphTarget[ j ].y;
-            var dz = cur_pos.z + particleData.velocity.z*10 - morphTarget[ j ].z;
+            var dx = cur_pos.x + particleData.velocity.x*20 - morphTarget[ j ].x;
+            var dy = cur_pos.y + particleData.velocity.y*20  - morphTarget[ j ].y;
+            var dz = cur_pos.z + particleData.velocity.z*20 - morphTarget[ j ].z;
             var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
             if(dist<min_dist){
               min_dist=dist;
@@ -240,11 +251,7 @@
         }
       }
 
-
-
       function animate() {
-
-
 
         var vertexpos = 0;
         var colorpos = 0;
@@ -299,31 +306,31 @@
 
             var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
 
-            // if ( dist < effectController.minDistance ) {
+            if ( dist < effectController.minDistance ) {
 
-            //   particleData.numConnections++;
-            //   particleDataB.numConnections++;
+              particleData.numConnections++;
+              particleDataB.numConnections++;
 
-            //   var alpha = 1.0 - dist / effectController.minDistance;
+              var alpha = 1.0 - dist / effectController.minDistance;
 
-            //   positions[ vertexpos++ ] = particlePositions[ i * 3     ];
-            //   positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
-            //   positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+              positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+              positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+              positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
 
-            //   positions[ vertexpos++ ] = particlePositions[ j * 3     ];
-            //   positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
-            //   positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+              positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+              positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+              positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
 
-            //   colors[ colorpos++ ] = alpha;
-            //   colors[ colorpos++ ] = alpha;
-            //   colors[ colorpos++ ] = alpha;
+              colors[ colorpos++ ] = alpha;
+              colors[ colorpos++ ] = alpha;
+              colors[ colorpos++ ] = alpha;
 
-            //   colors[ colorpos++ ] = alpha;
-            //   colors[ colorpos++ ] = alpha;
-            //   colors[ colorpos++ ] = alpha;
+              colors[ colorpos++ ] = alpha;
+              colors[ colorpos++ ] = alpha;
+              colors[ colorpos++ ] = alpha;
 
-            //   numConnected++;
-            // }
+              numConnected++;
+            }
           }
         }
 
@@ -332,6 +339,7 @@
         linesMesh.geometry.attributes.position.needsUpdate = true;
         linesMesh.geometry.attributes.color.needsUpdate = true;
 
+     
         pointCloud.geometry.attributes.position.needsUpdate = true;
 
         requestAnimationFrame( animate );
