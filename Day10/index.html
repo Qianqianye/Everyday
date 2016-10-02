@@ -72,7 +72,7 @@
 			uniforms = {
 				amplitude: { value: 5.0 },
 				opacity:   { value: 0.3 },
-				color:     { value: new THREE.Color( 0xff0000 ) }
+				color:     { value: new THREE.Color( 0xffffff ) }
 			};
 			var shaderMaterial = new THREE.ShaderMaterial( {
 				uniforms:       uniforms,
@@ -84,14 +84,14 @@
 			});
 			var geometry = new THREE.TextGeometry( 'Q', {
 				font: font,
-				size: 70,
+				size: 90,
 				height: 15,
 				curveSegments: 10,
-				bevelThickness: 5,
-				bevelSize: 1.5,
+				bevelThickness: 10,
+				bevelSize: 2.5,
 				bevelEnabled: true,
 				bevelSegments: 10,
-				steps: 40
+				steps: 60
 			} );
 			geometry.center();
 			var vertices = geometry.vertices;
@@ -104,12 +104,13 @@
 			buffergeometry.addAttribute( 'customColor', customColor );
 			var color = new THREE.Color( 0xffffff );
 			for( var i = 0, l = customColor.count; i < l; i ++ ) {
-				color.setHSL( i / l, 0.5, 0.5 );
+				color.setHSL( i / l, 1, 1 );
 				color.toArray( customColor.array, i * customColor.itemSize );
 			}
 			object = new THREE.Line( buffergeometry, shaderMaterial );
-			object.rotation.x = 0.2;
-			// object.rotation.z = 0.2;
+			object.rotation.x = 0.8;
+			object.rotation.y = 0.8;
+			// object.rotation.z = 0.8;
 			scene.add( object );
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
 			renderer.setClearColor( 0x050505 );
