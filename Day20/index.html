@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>3D Terrain Experiment Using Three.js</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+				<style>
+			body {
+				color: #fff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+			a {
+				color: #fff;
+			}
+
+			 .button {
+			 	z-index: 100;
+			 	position: relative;
+				background-color: #000000;
+			 	border: none;
+			 	top: 55px;
+			 	color: white;
+			 	text-align: center;
+			 	text-decoration: none;
+			 	display: inline-block;
+			 	font-size: 13px;
+			 	/*margin: 4px 40px;*/
+			 	-webkit-transition-duration: 0.2s; 
+			 	transition-duration: 0.2s;
+			 	cursor: pointer;
+			 	}
+
+			.button1 {
+				color: white;
+				border: 2px solid #e7e7e7;
+				}
+
+			.button1:hover {
+				background-color: #e7e7e7;
+				color: black;
+				}
+
+		</style>
+
+	</head>
+	<body>
+
+		<div id="info">/ Unknown Pleasures /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="https://threejs.org/examples/?q=terr#webgl_geometry_terrain_raycast" style="color: #b3ecec">Three.js</a></div>
+
+		<div align="center">
+		<button class="button button1" onclick="refreshPage()">Click to Get New Terrian.</button>
+		</div>
+		
+		<div id="container"></div>
+
+
+
+
+		<script src="https://threejs.org/build/three.js"></script>
+		<script src="js/OrbitControls.js"></script>
+		<script src="js/ImprovedNoise.js"></script>
+		<script src="js/Detector.js"></script>
+		<script src="js/stats.min.js"></script>>
+		<script src="js/sketch.js"></script>
+		
+	</body>
+</html>
