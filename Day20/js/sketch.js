@@ -120,6 +120,8 @@
       
       function animate() {
         requestAnimationFrame( animate );
+        mesh.rotation.y = Date.now() * 0.0002;  
+       
         render();
         stats.update();
       }
