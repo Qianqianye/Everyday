@@ -4,21 +4,6 @@ init();
 render();
 
 function init() {
-
-	// info
-	info = document.createElement( 'div' );
-	info.style.position = 'absolute';
-	info.style.bottom = '25px';
-	info.style.width = '100%';
-	info.style.textAlign = 'center';
-	info.style.color = '#fff';
-	info.style.fontWeight = 'bold';
-	info.style.backgroundColor = 'transparent';
-	info.style.zIndex = '1';
-	info.style.fontFamily = 'Monospace';
-	info.innerHTML = 'Refresh Page to See New Isometric<br/>Drag Mouse to Rotate Camera';
-	document.body.appendChild( info );
-
 	// renderer
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -30,7 +15,7 @@ function init() {
 	// camera
 	var aspect = window.innerWidth / window.innerHeight;
 	var d = 50;
-	camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
+	camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d+6, - d, 1, 1000 );
 
 	//set the x-component of rotation
 		camera.position.set( 200, 200, 200 );
@@ -54,9 +39,6 @@ function init() {
 		light.position.set( 0, 50, 50 );
 		scene.add( light );
 
-	// axes ///////
-	// scene.add( new THREE.AxisHelper( 40 ) );
-
 	// grid
 		var geometry = new THREE.PlaneBufferGeometry( 100, 100, 20, 20 );
 		var material = new THREE.MeshBasicMaterial( { wireframe: true, opacity: 0.3, transparent: true } );
@@ -69,7 +51,6 @@ function init() {
 	// geometry
 
 		var geometry = new THREE.BoxGeometry( 5, 5, 5 );
-		// var material = new THREE.MeshLambertMaterial( { color: 0xffffff, overdraw: 0.5 } );
 		var material = new THREE.MeshNormalMaterial();
 
 			for ( var i = 0; i < 100; i ++ ) {
@@ -87,7 +68,11 @@ function init() {
 
 }
 
-function render() {
+	function render() {
 		renderer.render( scene, camera );
 	}
+
+	function refreshPage(){
+    window.location.reload();
+	} 
 
