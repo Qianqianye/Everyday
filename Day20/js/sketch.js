@@ -24,7 +24,7 @@
         controls.userPanSpeed = 100;
         data = generateHeight( worldWidth, worldDepth );
         controls.target.y = data[ worldHalfWidth + worldHalfDepth * worldWidth ] + 500;
-        camera.position.y =  controls.target.y + 2000;
+        camera.position.y =  controls.target.y + 800;
         camera.position.x = 2000;
 
         var geometry = new THREE.PlaneBufferGeometry( 4500, 4500, worldWidth - 1, worldDepth - 1 );
