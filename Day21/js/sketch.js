@@ -14,98 +14,81 @@
         camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 15000 );
         camera.position.z = 3200;
         scene = new THREE.Scene();
-        // sphere = new THREE.Mesh( new THREE.SphereGeometry( 100, 20, 20 ), new THREE.MeshNormalMaterial() );
-        // sphere = new THREE.Mesh( new THREE.TorusGeometry(80, 40, 40, 40, 6.28), new THREE.MeshNormalMaterial() );
-        sphere = new THREE.Mesh( new THREE.TorusGeometry(80, 40, 40, 40, 6.28), new THREE.MeshBasicMaterial( { shading: THREE.FlatShading, color: 0xdddddd,  wireframe: true, wireframeLinewidth: 0.1, transparent: true } ) );
+
+        // var ambient = new THREE.AmbientLight( 0x444444 );
+        // scene.add( ambient );
+        // var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+        // directionalLight.position.set( 10, 0, 1 ).normalize();
+        // scene.add( directionalLight );
+
+        scene.add( new THREE.HemisphereLight( 0x999999, 0x555555 ) );
+        addShadowedLight( 1, 1, 1, 0xffffff, 1.35 );
+        addShadowedLight( 0.5, 1, -1, 0xffffff, 1 );
+
+        sphere = new THREE.Mesh( new THREE.TorusGeometry(120, 60, 40, 40, 6.28), new THREE.MeshNormalMaterial() );
+        // sphere = new THREE.Mesh( new THREE.TorusGeometry(80, 40, 40, 40, 6.28), new THREE.MeshBasicMaterial( { shading: THREE.FlatShading, color: 0xdddddd,  wireframe: true, wireframeLinewidth: 0.1, transparent: true } ) );
         scene.add( sphere );
 
         // var geometry = new THREE.CylinderGeometry( 0, 4, 40, 4, 1 );
-        // geometry.rotateX( Math.PI / 2 );
-        // // var material = new THREE.MeshNormalMaterial();
-        // var material = new THREE.MeshBasicMaterial( { shading: THREE.FlatShading, color: 0xdddddd,  wireframe: true, wireframeLinewidth: 0.5, transparent: true } );
-        // for ( var i = 0; i < 500; i ++ ) {
-        //   var mesh = new THREE.Mesh( geometry, material );
-        //   mesh.position.x = Math.random() * 4000 - 2000;
-        //   mesh.position.y = Math.random() * 4000 - 2000;
-        //   mesh.position.z = Math.random() * 4000 - 2000;
-        //   mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 4 + 2;
-        //   scene.add( mesh );
-        // }
+        //       geometry.rotateX( Math.PI / 2 );
+        // var material = new THREE.MeshNormalMaterial();
 
+        var material = new THREE.MeshBasicMaterial( { shading: THREE.FlatShading, color: 0xdddddd,  wireframe: true, wireframeLinewidth: 0.5, transparent: true } );
 
-        var ambient = new THREE.AmbientLight( 0x444444 );
-        scene.add( ambient );
-        var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-        directionalLight.position.set( 0, 0, 1 ).normalize();
-        scene.add( directionalLight );
+        var loader = new THREE.OBJLoader();
+        loader.load( "model/hand_01.obj", function( geometry ){
+        geometry.rotateX( Math.PI / 2 );
+        var  i, j, instance;       
+        var material = new THREE.MeshBasicMaterial( { shading: THREE.FlatShading, color: 0xdddddd,  wireframe: true, wireframeLinewidth: 0.5, transparent: true } );
 
+       var mesh = new THREE.Mesh( geometry,material );
+        for ( i = 0; i < 100; i ++ ) {
+       // for ( j = 0; j < 15; j += 3 ) {
+        instance = geometry.clone();
 
-        // model
-        var onProgress = function ( xhr ) {
-          if ( xhr.lengthComputable ) {
-            var percentComplete = xhr.loaded / xhr.total * 100;
-            console.log( Math.round(percentComplete, 2) + '% downloaded' );
-          }
-        };
+         // instance.position.set( 100*j, 0, 105*i);
+        instance.position.x = Math.random() * 4000 - 2000;
+        instance.position.y = Math.random() * 4000 - 2000;
+        instance.position.z = Math.random() * 4000 - 2000;
+        // instance.scale.x = instance.scale.y = instance.scale.z = Math.random() * 2 + 1;
+        instance.scale.x = instance.scale.y = instance.scale.z = -1.5;
+        scene.add( instance );
+      
+    }
+  });
 
-        var onError = function ( xhr ) { };
-        THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
-        var mtlLoader = new THREE.MTLLoader();
-        mtlLoader.setPath( 'model/' );
-        mtlLoader.load( 'hand_01.mtl', function( material ) {
-        material.preload();
+      scene.matrixAutoUpdate = false;
 
-          var objLoader = new THREE.OBJLoader();
-          objLoader.setMaterials( material );
-          objLoader.setPath( 'model/' );
-          objLoader.load( 'hand_01.obj', function ( geometry ) {
-            // object.position.y = - 95;
-            scene.add( geometry );
-          }, onProgress, onError );         
-        });
-
-      function callbackModel(  ) {
-         var mesh = new THREE.Mesh( geometry, material );
-          mesh.position.x = Math.random() * 4000 - 2000;
-          mesh.position.y = Math.random() * 4000 - 2000;
-          mesh.position.z = Math.random() * 4000 - 2000;
-          // console.log( mesh.position.x +'i m here');
-          mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 4 + 2;
-          scene.add( mesh );
-
-      }
-
-      // var loader = new THREE.PLYLoader();
-      //   loader.load( 'models/hand.ply', function ( geometry ) {
-      //     geometry.computeFaceNormals();
-      //     var material = new THREE.MeshStandardMaterial( { color: 0x0055ff } );
-      //     var mesh = new THREE.Mesh( geometry, material );
-      //     mesh.position.y = - 0.25;
-      //     mesh.rotation.x = - Math.PI / 2;
-      //     mesh.scale.multiplyScalar( 0.001 );
-      //     mesh.castShadow = true;
-      //     mesh.receiveShadow = true;
-      //     scene.add( mesh );
-
-      //     } );
-
-
-        scene.matrixAutoUpdate = false;
-
-
-
-        renderer = new THREE.WebGLRenderer( { antialias: true } );
-        renderer.setClearColor( 0x000000 );
-        renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.sortObjects = false;
-        container.appendChild( renderer.domElement );
-        stats = new Stats();
-        stats.domElement.style.position = 'absolute';
-        stats.domElement.style.top = '0px';
+      renderer = new THREE.WebGLRenderer( { antialias: true } );
+      renderer.setClearColor( 0x000000 );
+      renderer.setPixelRatio( window.devicePixelRatio );
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      renderer.sortObjects = false;
+      container.appendChild( renderer.domElement );
+      stats = new Stats();
+      stats.domElement.style.position = 'absolute';
+      stats.domElement.style.top = '0px';
         //
         window.addEventListener( 'resize', onWindowResize, false );
       }
+
+      function addShadowedLight( x, y, z, color, intensity ) {
+        var directionalLight = new THREE.DirectionalLight( color, intensity );
+        directionalLight.position.set( x, y, z );
+        scene.add( directionalLight );
+        directionalLight.castShadow = true;
+        var d = 1;
+        directionalLight.shadow.camera.left = -d;
+        directionalLight.shadow.camera.right = d;
+        directionalLight.shadow.camera.top = d;
+        directionalLight.shadow.camera.bottom = -d;
+        directionalLight.shadow.camera.near = 1;
+        directionalLight.shadow.camera.far = 4;
+        directionalLight.shadow.mapSize.width = 1024;
+        directionalLight.shadow.mapSize.height = 1024;
+        directionalLight.shadow.bias = -0.005;
+      }
+
 
       function onWindowResize() {
         windowHalfX = window.innerWidth / 2;
@@ -128,11 +111,10 @@
       }
 
       function render() {
-        var time = Date.now() * 0.001;
-
-        sphere.rotation.x = Date.now() * 0.005;  
-        sphere.rotation.y = Date.now() * 0.002;  
-        sphere.rotation.z = Date.now() * 0.001;
+        var time = Date.now() * 0.003;
+        sphere.rotation.x = time;  
+        sphere.rotation.y = time;  
+        sphere.rotation.z = time;
 
         sphere.position.x = Math.sin( time * 0.7 ) * 2000;
         sphere.position.y = Math.cos( time * 0.5 ) * 2000;
