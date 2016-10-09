@@ -108,13 +108,40 @@
 				scene.add( planeLeft );
 
 				// lights	
-				var mainLight = new THREE.PointLight( 0xbbbbbb, 1.5, 1000 );
+				var mainLight = new THREE.PointLight( 0xbbbbbb, 1, 1000 );
 				mainLight.position.y = 90;
 				mainLight.position.z = 100;
 				scene.add( mainLight );
+
+					function createLight( color ) {
+					var pointLight = new THREE.PointLight( color, 35, 30 );
+					pointLight.castShadow = true;
+					pointLight.shadow.camera.near = 1;
+					pointLight.shadow.camera.far = 30;
+					// pointLight.shadowCameraVisible = true;
+					pointLight.shadow.bias = 0.01;
+					var geometry = new THREE.SphereGeometry( 0.1, 12, 6 );
+					var material = new THREE.MeshBasicMaterial( { color: color } );
+					var sphere = new THREE.Mesh( geometry, material );
+					pointLight.add( sphere );
+					return pointLight
+				}
+				pointLight = createLight( 0xffffff );
+				scene.add( pointLight );
+				pointLight2 = createLight( 0xff0000 );
+				scene.add( pointLight2 );
+
 			}
-		
 			function render() {
+				var time = performance.now() * 0.001;
+				pointLight.position.x = Math.sin( time ) * 9;
+				pointLight.position.y = Math.sin( time * 1.1 ) * 9 + 25;
+				pointLight.position.z = Math.sin( time * 1.2 ) * 9;
+				time += 10000;
+				pointLight2.position.x = Math.sin( time ) * 9;
+				pointLight2.position.y = Math.sin( time * 1.1 ) * 9 + 25;
+				pointLight2.position.z = Math.sin( time * 1.2 ) * 9;
+
 				groundMirror.renderWithMirror( verticalMirror );
 				verticalMirror.renderWithMirror( groundMirror );
 				renderer.render(scene, camera);
@@ -126,7 +153,7 @@
 				if (loaded == true){
 					heart.position.set(
 					Math.cos( timer * 0.1 ) * 30,
-					Math.abs( Math.cos( timer * 0.2 ) ) * 20 + 5,
+					Math.abs( Math.cos( timer * 0.2 ) ) * 20 + 25,
 					Math.sin( timer * 0.1 ) * 30
 				);
 
