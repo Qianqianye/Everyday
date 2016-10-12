@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Collision Experiment Using d3.js</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<script type="text/javascript" src="js/d3.js"></script>
+	<script type="text/javascript" src="js/d3.geom.js"></script>
+	<script type="text/javascript" src="js/d3.layout.js"></script>
+
+	<style type="text/css">
+	circle {
+		stroke-width: 1.2;
+		/*stroke-opacity: .8;*/
+		stroke-dasharray: 1, 2;
+	}
+	body {
+		font-family: Monospace;
+		background-color: #000;
+		color: #fff;
+		margin: 0px;
+		overflow: hidden;
+	}
+	#info {
+		position: absolute;
+		top: 10px;
+		width: 100%;
+		text-align: center;
+		z-index: 100;
+		display:block;
+	}
+	</style>
+</head>
+<body>
+	<div id="body">
+		<div id="info">/ Bubbbbles /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="http://mbostock.github.io/d3/talk/20111018/collision.html" style="color: #b3ecec">D3.js</a></br>Move the Mouse to Hit Bubbles</div>
+	</div>
+
+	<script type="text/javascript">
+
+	var w = window.innerWidth,
+	h = window.innerHeight;
+
+	var nodes = d3.range(200).map(function() { return {radius: Math.random() * 8 + 12}; }),
+	color = d3.scale.category10();
+
+	var force = d3.layout.force()
+	.gravity(0.08)
+	.charge(function(d, i) { return i ? 0 : -2500; })
+	.nodes(nodes)
+	.size([w, h]);
+
+	var root = nodes[0];
+	root.radius = 0;
+	root.fixed = true;
+
+	force.start();
+
+	var svg = d3.select("#body").append("svg:svg")
+	.attr("width", w)
+	.attr("height", h);
+
+	svg.selectAll("circle")
+	.data(nodes.slice(1))
+	.enter().append("svg:circle")
+	.attr("r", function(d) { return d.radius - 3; })
+	.style("stroke", function(d, i) { return color(i % 10); });
+
+
+	force.on("tick", function(e) {
+		var q = d3.geom.quadtree(nodes),
+		i = 0,
+		n = nodes.length;
+
+		while (++i < n) {
+			q.visit(collide(nodes[i]));
+		}
+
+		svg.selectAll("circle")
+		.attr("cx", function(d) { return d.x; })
+		.attr("cy", function(d) { return d.y; });
+	});
+
+	svg.on("mousemove", function() {
+		var p1 = d3.svg.mouse(this);
+		root.px = p1[0];
+		root.py = p1[1];
+		force.resume();
+	});
+
+	function collide(node) {
+		var r = node.radius + 16,
+		nx1 = node.x - r,
+		nx2 = node.x + r,
+		ny1 = node.y - r,
+		ny2 = node.y + r;
+		return function(quad, x1, y1, x2, y2) {
+			if (quad.point && (quad.point !== node)) {
+				var x = node.x - quad.point.x,
+				y = node.y - quad.point.y,
+				l = Math.sqrt(x * x + y * y),
+				r = node.radius + quad.point.radius;
+				if (l < r) {
+					l = (l - r) / l * .5;
+					node.x -= x *= l;
+					node.y -= y *= l;
+					quad.point.x += x;
+					quad.point.y += y;
+				}
+			}
+			return x1 > nx2
+			|| x2 < nx1
+			|| y1 > ny2
+			|| y2 < ny1;
+		};
+	}
+
+	</script>
+</body>
+</html>
+
