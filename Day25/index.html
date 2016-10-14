@@ -34,7 +34,7 @@
 
 		.link {
 			stroke: #999;
-			stroke-width: 1;
+			stroke-width: 1.5;
 			stroke-dasharray: 2, 2;
 			opacity: .8;
 		}
@@ -49,13 +49,13 @@
 		var width = window.innerWidth,
 		height = window.innerHeight;
 
-		color = d3.scale.category20();
+		color = d3.scale.category20b();
 
 		var force = d3.layout.force()
 		.size([width, height])
     	.nodes([{}]) // initialize with a single node
-   		.linkDistance(30)
-    	.charge(-60)
+   		.linkDistance(50)
+    	.charge(-80)
     	.on("tick", tick);
 
     	var svg = d3.select("body").append("svg")
@@ -120,8 +120,9 @@ function restart() {
 
 	node.enter().insert("circle", ".cursor")
 	.attr("class", "node")
-	.attr("r", Math.random() * 10 + 4)
-	.style("stroke", function(d, i) { return color(i % 15); })
+	.attr("r", Math.random() * 20 + 5)
+	.style("fill", function(d, i) { return color(i % 20); })
+
 	.call(force.drag);
 
 	force.start();
