@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sound Viz</title>
+  <script src="libraries/p5.js" type="text/javascript"></script>
+  <script src="libraries/p5.dom.js" type="text/javascript"></script>
+  <script src="libraries/p5.sound.js" type="text/javascript"></script>
+  <script src="sketch.js" type="text/javascript"></script>
+  <style>
+      body {
+    font-family: Monospace;
+    background-color: #000;
+    color: #fff;
+    margin: 0px;
+    overflow: hidden;
+  }
+  #info {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    display:block;
+  }
+
+  
+  .button {
+    z-index: 100;
+    position: relative;
+    background-color: #000000;
+    border: none;
+    top: 65px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    /*margin: 4px 40px;*/
+    -webkit-transition-duration: 0.2s; 
+    transition-duration: 0.2s;
+    cursor: pointer;
+  }
+
+  .button1 {
+    color: white;
+    border: 2px solid #e7e7e7;
+  }
+
+  .button1:hover {
+    background-color: #e7e7e7;
+    color: black;
+  }
+
+  </style>
+</head>
+<body>
+
+<div id="body">
+  
+      <div id="info">/ Petrichor  /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="https://p5js.org/" style="color: #b3ecec">p5.js</a></br>Click Play to See and Hear Petrichor</div>
+
+      <div align="center">
+        <button class="button button1" onclick="pressButton('play')" id="play">Play</button>
+        <button class="button button1" onclick="pressButton('stop')" id="stop">Stop</button>
+      </div>
+
+    </div>
+
+  </body>
+  </html>
