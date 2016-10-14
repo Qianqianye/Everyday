@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Node Experiment Using d3.js</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	
+	<style>
+	body {
+		font-family: Monospace;
+		background-color: #000;
+		color: #fff;
+		margin: 0px;
+		overflow: hidden;
+	}
+	#info {
+		position: absolute;
+		top: 10px;
+		width: 100%;
+		text-align: center;
+		z-index: 100;
+		display:block;
+	}
+
+	.node {
+		opacity: .9;
+	}
+	.button {
+		z-index: 100;
+		position: relative;
+		background-color: #000000;
+		border: none;
+		top: 65px;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 13px;
+		/*margin: 4px 40px;*/
+		-webkit-transition-duration: 0.2s; 
+		transition-duration: 0.2s;
+		cursor: pointer;
+	}
+
+	.button1 {
+		color: white;
+		border: 2px solid #e7e7e7;
+	}
+
+	.button1:hover {
+		background-color: #e7e7e7;
+		color: black;
+	}
+
+
+	</style>
+	<body>
+		<div id="body">
+			<div id="info">/ Wheel Throwing  /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="http://bl.ocks.org/mbostock/9539958" style="color: #b3ecec">D3.js</a></br>Move Mouse Around to Make Particles</div>
+
+			<div align="center">
+				<button class="button button1" onclick="pressButton('Color')" id="Color">Color Mode</button>
+				<button class="button button1" onclick="pressButton('Monochrome')" id="Monochrome">Monochrome Mode</button>
+			</div>
+
+		</div>
+
+		<script>
+
+		var width = Math.max(960, innerWidth),
+		height = Math.max(500, innerHeight);
+
+		var x1 = width / 2,
+		y1 = height / 2,
+		x0 = x1,
+		y0 = y1,
+		i = 0,
+		r = 300,
+		τ = 2 * Math.PI;
+
+		var canvas = d3.select("body").append("canvas")
+		.attr("width", width)
+		.attr("height", height)
+		.on("ontouchstart" in document ? "touchmove" : "mousemove", move);
+
+		var context = canvas.node().getContext("2d");
+		context.globalCompositeOperation = "lighter";
+		context.lineWidth = 1;
+
+		// d3.timer(function() {
+		// 	context.clearRect(0, 0, width, height);
+
+		// 	var z = d3.hsl(++i % 360, 1, .3).rgb(),
+		// 	c = "rgba(" + z.r + "," + z.g + "," + z.b + ",",
+		// 		x = x0 += (x1 - x0) * .1,
+		// 		y = y0 += (y1 - y0) * .1;
+
+		// 		d3.select({}).transition()
+		// 		.duration(5000)
+		// 		.ease(Math.sqrt)
+		// 		.tween("circle", function() {
+		// 			return function(t) {
+		// 				context.strokeStyle = c + (1 - t) + ")";
+		// 		context.beginPath();
+		// 		context.arc(x, y, r * t, 0, τ);
+		// 		context.stroke();
+		// 	};
+		// });
+		// 	});
+
+d3.timer(function() {
+	context.clearRect(0, 0, width, height);
+
+	var z = d3.hsl("white").rgb(),
+	c = "rgba(" + z.r + "," + z.g + "," + z.b + ",",
+		x = x0 += (x1 - x0) * .1,
+		y = y0 += (y1 - y0) * .1;
+
+		d3.select({}).transition()
+		.duration(5000)
+		.ease(Math.sqrt)
+		.tween("circle", function() {
+			return function(t) {
+				context.strokeStyle = c + (1 - t) + ")";
+		context.beginPath();
+		context.arc(x, y, r * t, 0, τ);
+		context.stroke();
+	};
+});
+	});
+
+function move() {
+	var mouse = d3.mouse(this);
+	x1 = mouse[0];
+	y1 = mouse[1];
+	d3.event.preventDefault();
+}
+
+d3.timer(function() {
+	context.clearRect(0, 0, width, height);
+
+
+	function pressButton(buttonName){
+
+		if ('Color'.indexOf(buttonName) != -1 ) {
+			var z = d3.hsl(++i % 360, 1, .3).rgb();
+		}
+
+		else if('Monochrome'.indexOf(buttonName) != -1 ) {
+			var z = d3.hsl("white").rgb();
+		}
+		else{
+			console.log('that button is not programmed yet');
+		}
+
+		c = "rgba(" + z.r + "," + z.g + "," + z.b + ",",
+			x = x0 += (x1 - x0) * .1,
+			y = y0 += (y1 - y0) * .1;
+
+			d3.select({}).transition()
+			.duration(5000)
+			.ease(Math.sqrt)
+			.tween("circle", function() {
+				return function(t) {
+					context.strokeStyle = c + (1 - t) + ")";
+			context.beginPath();
+			context.arc(x, y, r * t, 0, τ);
+			context.stroke();
+
+		}
+	});
+		}
+	});
+
+
+</script>
+</body>
+</html>
