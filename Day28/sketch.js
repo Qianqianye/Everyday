@@ -2,7 +2,6 @@ var soundsample;
 var analyzer;
 var playbutton, stopbutton;
 
-var cnv;
 
 function preload() 
 {
@@ -11,8 +10,7 @@ function preload()
 
 function setup() 
 {
-	 cnv = createCanvas(windowWidth,windowHeight);
-     cnv.parent('body');
+	 createCanvas(windowWidth,windowHeight);
 
 	background(0);
 	soundsample.loop(); 
@@ -24,7 +22,7 @@ function setup()
 }
 
 function draw()
-{  // background(0); // use this if only wanna show one circle
+{  
   
   var vol = analyzer.getLevel();
   stroke(random(255),random(255),random(255));
