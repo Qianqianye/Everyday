@@ -38,4 +38,3 @@ function pressButton(buttonName){
 		soundsample.pause();
 	}
 }
-
