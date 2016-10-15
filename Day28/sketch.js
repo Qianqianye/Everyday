@@ -5,7 +5,7 @@ var playbutton, stopbutton;
 
 function preload() 
 {
-	soundsample = loadSound('sound/love will tear us apart.mp3');
+	soundsample = loadSound('sound/love-will-tear-us-apart.mp3');
 }
 
 function setup() 
