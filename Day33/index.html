@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Vertex Experiment Using Three.js</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+	body {
+		color: #fff;
+		font-family:Monospace;
+		font-size:13px;
+		text-align:center;
+		background-color: #000;
+		margin: 0px;
+		overflow: hidden;
+	}
+	#info {
+		position: absolute;
+		top: 0px; width: 100%;
+		padding: 5px;
+	}
+	a {
+		color: #fff;
+	}
+	#container{
+		position: absolute;
+	}
+
+	</style>
+
+</head>
+<body>
+	<div id="container"></div>
+
+	<div id="info">/ Jelly Body /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="https://threejs.org/examples/#webgl_trails" style="color: #b3ecec">Three.js</a></br>Move Mouse Around</div>
+
+	<script id="vertexShader" type="x-shader/x-vertex">
+		uniform float time;
+		varying vec3 vNormal;
+		void main(void) {
+			vec3 v = position;
+			vNormal = normal;
+			v.y += sin(1.0 * position.x + (time)) * 100.5;
+			v.x += sin(1.0 * position.y + (time)) * 100.5;
+		gl_Position = projectionMatrix *
+		modelViewMatrix *
+		vec4(v, 1.0);
+		}
+	</script>
+
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		varying vec3 vNormal;
+		uniform float time;
+
+		void main(void) {
+			vec3 light = vec3(0.3, 0.1, .5);
+			light = normalize(light);
+			float dProd = max(0.2, dot(vNormal, light));
+ 		   gl_FragColor = vec4(.5, dProd, (time*.2)*.5, 0.5); 
+		}
+	</script>
+
+<script src="https://threejs.org/build/three.js"></script>
+<script src="js/sketch.js"></script>
+
+</body>
+</html>
