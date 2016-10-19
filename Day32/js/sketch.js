@@ -1,7 +1,7 @@
-var allObjects = 1000;
-var objectSize = 20;
-var sizeRandomness = 1000;
-var movementSpeed = 30;
+var allObjects = 400;
+var objectSize = 50;
+var sizeRandomness = 200;
+var movementSpeed = 25;
 var colors = [0xFFFFFF, 0x7bb3ff, 0xe86af0, 0x9e379f, 0x493267, 0xff8b94];
 var dirs = [];
 var parts = [];
@@ -16,7 +16,8 @@ var scene = new THREE.Scene();
 
 function ExplodeAnimation(x,y){
   geometry = new THREE.Geometry();
-  sprite = new THREE.TextureLoader().load( "image/sphere.png" );
+  // sprite = new THREE.TextureLoader().load( "image/sphere.png" );
+  sprite = new THREE.TextureLoader().load( "image/brain.png" );
   
   for (i = 0; i < allObjects; i ++) 
   { 
