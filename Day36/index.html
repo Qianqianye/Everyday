@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Group Experiment Using Three.js</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+			.button {
+				left:42%;
+			 	z-index: 100;
+			 	position: fixed;
+				background-color: #000000;
+			 	border: none;
+			 	top: 65px;
+			 	color: white;
+			 	text-align: center;
+			 	text-decoration: none;
+			 	display: inline-block;
+			 	font-size: 13px;
+			 	/*margin: 4px 40px;*/
+			 	-webkit-transition-duration: 0.2s; 
+			 	transition-duration: 0.2s;
+			 	cursor: pointer;
+			 	}
+
+			.button1 {
+				color: white;
+				border: 2px solid #e7e7e7;
+				}
+
+			.button1:hover {
+				background-color: #e7e7e7;
+				color: black;
+				}
+
+		</style>
+	</head>
+	<body>
+<div id="container">
+</div>
+<div id="info">/ Metropolis /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="https://threejs.org/" style="color: #b3ecec">Three.js</a></br>Scroll or Drag Mouse to Discover the City</div>
+
+<div align="center">
+		<button class="button button1" onclick="refreshPage()">Click Here to Get New Metropolis</button>
+		</div>
+
+		<script src="https://threejs.org/build/three.min.js"></script>
+		<script src="js/OrbitControls.js"></script>
+		<script src="js/sketch.js"></script>
+		
+
+	</body>
+</html>
