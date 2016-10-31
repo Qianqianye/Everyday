@@ -11,9 +11,7 @@ threejs.prototype.init = function init() {
      this.renderer();
      this.light();
      this.floor();
-
      this.initShape();
-
      this.render();
 };
 
@@ -75,40 +73,44 @@ threejs.prototype.initShape = function initShape() {
      this.scene.add(this.rotateGroup);
 
      for(var i=0;i<10;i++){
-          this.geometry = new THREE.BoxGeometry( 52, 52, 52 );
+          this.geometry = new THREE.BoxGeometry( 80, 80, 80 );
           this.material = new THREE.MeshLambertMaterial({color : 0x999999, shading: THREE.FlatShading});
           this.shape = new THREE.Mesh(this.geometry, this.material);
           this.shape.castShadow = true;
           this.shape.receiveShadow = false;
 
           if(i==4){
-               this.shape.position.x = 55;
-               this.shape.position.y = 2*55;
+               this.shape.position.x = 85;
+               this.shape.position.y = 2*85;
                this.shape.position.z = 0;
                
           }else if(i==5){
-               this.shape.position.x = 55;
-               this.shape.position.y = 3*55;
+               this.shape.position.x = 85;
+               this.shape.position.y = 3*85;
                this.shape.position.z = 0;
           }else if(i==6){
                this.shape.position.x = 0;
                this.shape.position.y = 0;
-               this.shape.position.z = 55;
+               this.shape.position.z = 85;
           }else if(i==7){
-               this.shape.position.x = 2*55;
-               this.shape.position.y = 55;
+               this.shape.position.x = 2*85;
+               this.shape.position.y = 85;
                this.shape.position.z = 0;
           }else if(i==8){
-               this.shape.position.x = 55;
-               this.shape.position.y = 55;
-               this.shape.position.z = 55;
+               this.shape.position.x = 85;
+               this.shape.position.y = 85;
+               this.shape.position.z = 85;
+          }else if(i==9){
+               this.shape.position.x = 85*2;
+               this.shape.position.y = 85*2;
+               this.shape.position.z = 0;
           }else{
                this.shape.position.x = 0;
-               this.shape.position.y = i*55;
+               this.shape.position.y = i*85;
                this.shape.position.z = 0;
           }
 
-          if(i==1 || i==2 || i==4|| i==6|| i==8){
+          if(i==1 || i==2 || i==4|| i==6|| i==8|| i==9){
                this.rotateGroup.add(this.shape);
           }else{
                this.myArray.add(this.shape);      
@@ -126,12 +128,12 @@ threejs.prototype.initShape = function initShape() {
      this.tl = new TimelineMax({repeat: -1});
 
      this.tl.to(this.rotateGroup.rotation,0.3,{y:0,ease:Expo.easeOut});
-     this.tl.to(this.pushingCube1.position,0.3,{y:2*55,ease:Expo.easeOut});
-     this.tl.to(this.movingCube.position,0.3,{y:55,ease:Expo.easeOut},"=-0.3");
-     this.tl.to(this.pushingCube1.position,0.3,{y:3*55,ease:Expo.easeOut});
+     this.tl.to(this.pushingCube1.position,0.3,{y:2*85,ease:Expo.easeOut});
+     this.tl.to(this.movingCube.position,0.3,{y:85,ease:Expo.easeOut},"=-0.3");
+     this.tl.to(this.pushingCube1.position,0.3,{y:3*85,ease:Expo.easeOut});
      this.tl.to(this.rotateGroup.rotation,0.5,{y:-Math.PI/2,ease:Expo.easeOut});
-     this.tl.to(this.pushingCube2.position,0.3,{y:55,ease:Expo.easeOut});
-     this.tl.to(this.movingCube.position,0.3,{y:2*55,ease:Expo.easeOut},"=-0.3");
+     this.tl.to(this.pushingCube2.position,0.3,{y:85,ease:Expo.easeOut});
+     this.tl.to(this.movingCube.position,0.3,{y:2*85,ease:Expo.easeOut},"=-0.3");
      this.tl.to(this.pushingCube2.position,0.3,{y:0,ease:Expo.easeOut});
      this.tl.to(this.rotateGroup.rotation,0.3,{y:0,ease:Expo.easeOut});
 
