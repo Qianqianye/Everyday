@@ -19,8 +19,14 @@ camera.lookAt( new THREE.Vector3(0,6000,0) );
 var scene = new THREE.Scene();
 scene.fog = new THREE.Fog( 0x000000, 1, 300000 );
 
+renderer = new THREE.WebGLRenderer();
+      renderer.setPixelRatio( window.devicePixelRatio );
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+        
 controls = new THREE.VRControls( camera );
-        effect = new THREE.VREffect(  renderer );
+ effect = new THREE.VREffect(  renderer );
         if ( navigator.getVRDisplays ) {
           navigator.getVRDisplays()
             .then( function ( displays ) {
