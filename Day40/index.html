@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Points Experiment Using Three.js</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+	body {
+		color: #fff;
+		font-family:Monospace;
+		font-size:13px;
+		text-align:center;
+		background-color: #000;
+		margin: 0px;
+		overflow: hidden;
+		background-image: radial-gradient(ellipse farthest-corner at center top, #23233f 0%, #000000 60%);
+	}
+	#info {
+		position: absolute;
+		top: 0px; width: 100%;
+		padding: 5px;
+	}
+	a {
+		color: #fff;
+	}
+	#container{
+		position: absolute;
+	}
+
+	</style>
+
+</head>
+<body>
+	<div id="container"></div>
+
+	<div id="info">/ Ladies and Gentlemen We Are Floating In Space /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="https://threejs.org/examples/?q=POINT#webgl_points_random" style="color: #b3ecec">Three.js</a></div>
+
+	<script id="vertexShader" type="x-shader/x-vertex">
+
+// Uniforms
+uniform float time;
+varying vec3 vNormal;
+      
+void main(void) {
+   vec3 v = position;
+   vNormal = normal;
+   v.z += cos(2.0 * position.x + (time)) * 4085.5;
+	
+   gl_Position = projectionMatrix *
+                modelViewMatrix *
+                vec4(v, 1.0);
+}
+
+		</script>
+
+
+		<script id="fragmentShader" type="x-shader/x-fragment">
+varying vec3 vNormal;
+uniform float time;
+      
+void main(void) {
+    vec3 light = vec3(0.1, .9, .1);
+
+    light = normalize(light);
+
+    float dProd = max(0.2, dot(vNormal, light));
+
+    gl_FragColor = vec4(dProd, // R
+                      dProd, // G
+                      dProd, // B
+                      1.0);  // A
+}
+</script>
+
+<script src="https://threejs.org/build/three.js"></script>
+<script src="js/sketch.js"></script>
+<script src="js/VRControls.js"></script>
+<script src="js/VREffect.js"></script>
+<script src="js/WebVR.js"></script>
+
+</body>
+</html>
