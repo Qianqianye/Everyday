@@ -34,50 +34,28 @@
 <body>
 	<div id="container"></div>
 
-	<div id="info">/ Ladies and Gentlemen We Are Floating In Space /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="https://threejs.org/examples/?q=POINT#webgl_points_random" style="color: #b3ecec">Three.js</a></div>
-
-	<script id="vertexShader" type="x-shader/x-vertex">
-
-// Uniforms
-uniform float time;
-varying vec3 vNormal;
-      
-void main(void) {
-   vec3 v = position;
-   vNormal = normal;
-   v.z += cos(2.0 * position.x + (time)) * 4085.5;
-	
-   gl_Position = projectionMatrix *
-                modelViewMatrix *
-                vec4(v, 1.0);
-}
-
-		</script>
+	<div id="info">/ Floating Polygon /</br>Created by <a href="http://qianqian-ye.com/" style="color: #b3ecec">Qianqian Ye</a> , Powered by <a href="https://threejs.org/examples/?q=POINT#webgl_points_random" style="color: #b3ecec">Three.js</a></br>Please Connect to Your VR Hardware to try this WebVR Experiment </div>
 
 
-		<script id="fragmentShader" type="x-shader/x-fragment">
-varying vec3 vNormal;
-uniform float time;
-      
-void main(void) {
-    vec3 light = vec3(0.1, .9, .1);
-
-    light = normalize(light);
-
-    float dProd = max(0.2, dot(vNormal, light));
-
-    gl_FragColor = vec4(dProd, // R
-                      dProd, // G
-                      dProd, // B
-                      1.0);  // A
-}
+<script>
+WebVRConfig = {
+  BUFFER_SCALE: 0.5, 
+};
 </script>
+
+<script src="js/es6-promise.js"></script>
 
 <script src="https://threejs.org/build/three.js"></script>
 <script src="js/VRControls.js"></script>
 <script src="js/VREffect.js"></script>
-<script src="js/WebVR.js"></script>
+
+<script src="js/webvr-polyfill.js"></script>
+<script src="js/webvr-manager.js"></script>
+
+<!-- <script src="js/WebVR.js"></script> -->
+
 <script src="js/sketch.js"></script>
+
 
 </body>
 </html>
