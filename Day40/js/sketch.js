@@ -1,105 +1,121 @@
-if ( WEBVR.isAvailable() === false ) {
-      document.body.appendChild( WEBVR.getMessage() );
 
-    }
-
-var vertexHeight = 15000;
-var planeDefinition = 100;
-var planeSize = 1245000;
-var totalObjects = 100000;
-
-var container = document.createElement('div');
-document.body.appendChild( container );
-
-var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight,1, 400000)
-camera.position.z = 550000;
-camera.position.y =10000;
-camera.lookAt( new THREE.Vector3(0,6000,0) );
+var renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setPixelRatio(window.devicePixelRatio);
+document.body.appendChild(renderer.domElement);
 
 var scene = new THREE.Scene();
-scene.fog = new THREE.Fog( 0x000000, 1, 300000 );
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+var controls = new THREE.VRControls(camera);
+controls.standing = true;
+controls.standing = true;
 
-renderer = new THREE.WebGLRenderer();
-      renderer.setPixelRatio( window.devicePixelRatio );
-      renderer.setSize( window.innerWidth, window.innerHeight );
-      document.body.appendChild( renderer.domElement );
+var effect = new THREE.VREffect(renderer);
+effect.setSize(window.innerWidth, window.innerHeight);
 
-        
-controls = new THREE.VRControls( camera );
- effect = new THREE.VREffect(  renderer );
-        if ( navigator.getVRDisplays ) {
-          navigator.getVRDisplays()
-            .then( function ( displays ) {
-              effect.setVRDisplay( displays[ 0 ] );
-              controls.setVRDisplay( displays[ 0 ] );
-            } )
-            .catch( function () {
-              // no displays
-            } );
-          document.body.appendChild( WEBVR.getButton( effect ) );
-        }
+// Add a repeating grid as a skybox.
+var boxSize = 100;
+var loader = new THREE.TextureLoader();
+loader.load('img/box.png', onTextureLoaded);
 
-var plane = new THREE.Mesh( new THREE.PlaneGeometry( planeSize, planeSize, planeDefinition, planeDefinition ), new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: true } ) );
+function onTextureLoaded(texture) {
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(boxSize, boxSize);
 
-plane.rotation.x -=Math.PI*.5;
+  var geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
+  var material = new THREE.MeshBasicMaterial({
+    map: texture,
+    color: 0x01BE00,
+    side: THREE.BackSide
+  });
 
-scene.add( plane );
+  // Align the skybox to the floor (which is at y=0).
+  skybox = new THREE.Mesh(geometry, material);
+  skybox.position.y = boxSize/2;
+  scene.add(skybox);
 
-var geometry = new THREE.Geometry();
-sprite = new THREE.TextureLoader().load( "image/planet-4.png" );
-
-for (i = 0; i < totalObjects; i ++) 
-{ 
-  var vertex = new THREE.Vector3();
-  vertex.x = Math.random()*planeSize-(planeSize*.5);
-  vertex.y = Math.random()*100000;
-  vertex.z = Math.random()*planeSize-(planeSize*.5);
-  geometry.vertices.push( vertex );
+  // For high end VR devices like Vive and Oculus, take into account the stage
+  // parameters provided.
+  setupStage();
 }
 
-var material = new THREE.PointsMaterial( { size: 1500, map: sprite,  alphaTest: 0.2, });
-var particles = new THREE.Points( geometry, material );   
-scene.add( particles ); 
+// Create a VR manager helper to enter and exit VR mode.
+var params = {
+  hideButton: false, 
+  isUndistorted: false 
+};
+var manager = new WebVRManager(renderer, effect, params);
 
-var renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-container.appendChild( renderer.domElement );
 
-window.addEventListener( 'resize', onWindowResize, false );
-updatePlane();
+//---QQQQ------------------
+var vertexHeight = 0.5;
+var planeDefinition = 10;
+var planeSize = 2
 
- function updatePlane() { 
-   for (var i = 0; i < plane.geometry.vertices.length; i++) 
+var plane = new THREE.Mesh( new THREE.PlaneGeometry( planeSize, planeSize, planeDefinition, planeDefinition ), new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: true } ) );
+scene.add( plane );
+  for (var i = 0; i < plane.geometry.vertices.length; i++) 
    { 
      plane.geometry.vertices[i].z += Math.random()*vertexHeight -vertexHeight; 
    } 
- };
 
 
+//---QQQQ------------------
 
-function render() {
-        requestAnimationFrame( render );
-        camera.position.z -= 150;
-        renderer.render( scene, camera );
+window.addEventListener('resize', onResize, true);
+window.addEventListener('vrdisplaypresentchange', onResize, true);
+
+// Request animation frame loop function
+var lastRender = 0;
+function animate(timestamp) {
+  var delta = Math.min(timestamp - lastRender, 500);
+  lastRender = timestamp;
+
+  plane.rotation.x += delta * 0.0006;
+
+  controls.update();
+  // Render the scene through the manager.
+  manager.render(scene, camera, timestamp);
+  effect.render(scene, camera);
+  vrDisplay.requestAnimationFrame(animate);
+}
+
+function onResize(e) {
+  effect.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+}
+
+var vrDisplay;
+
+// Get the HMD, and if we're dealing with something that specifies
+// stageParameters, rearrange the scene.
+function setupStage() {
+  navigator.getVRDisplays().then(function(displays) {
+    if (displays.length > 0) {
+      vrDisplay = displays[0];
+      if (vrDisplay.stageParameters) {
+        setStageDimensions(vrDisplay.stageParameters);
       }
-
-render();
-
-function onWindowResize() {
-
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-
-      effect.setSize( window.innerWidth, window.innerHeight );
-
+      vrDisplay.requestAnimationFrame(animate);
     }
+  });
+}
 
-    function animate() {
+function setStageDimensions(stage) {
+  // Make the skybox fit the stage.
+  var material = skybox.material;
+  scene.remove(skybox);
 
-      controls.update();
+  // Size the skybox according to the size of the actual stage.
+  var geometry = new THREE.BoxGeometry(stage.sizeX, boxSize, stage.sizeZ);
+  skybox = new THREE.Mesh(geometry, material);
 
-      effect.render( scene, camera );
+  // Place it on the floor.
+  skybox.position.y = boxSize/2;
+  scene.add(skybox);
 
-      effect.requestAnimationFrame( animate );
+  // Place the geometry in the middle of the scene, at user height.
 
-    }
+  plane.position.set(0, controls.userHeight, 0);
+}
