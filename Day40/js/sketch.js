@@ -54,10 +54,10 @@ var planeSize = 2
 
 var plane = new THREE.Mesh( new THREE.PlaneGeometry( planeSize, planeSize, planeDefinition, planeDefinition ), new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: true } ) );
 scene.add( plane );
-  for (var i = 0; i < plane.geometry.vertices.length; i++) 
-   { 
-     plane.geometry.vertices[i].z += Math.random()*vertexHeight -vertexHeight; 
-   } 
+for (var i = 0; i < plane.geometry.vertices.length; i++) 
+{ 
+ plane.geometry.vertices[i].z += Math.random()*vertexHeight -vertexHeight; 
+} 
 
 
 //---QQQQ------------------

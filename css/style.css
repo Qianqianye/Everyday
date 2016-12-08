@@ -616,23 +616,58 @@ a, a:hover {
 
 		#header .logo-wrap {  }
 
-	.title {
-        text-align: center;
-        text-transform: uppercase;
-        font-size: 200px;
-        font-weight: 5;
-        padding: 10px 0px 100px 0px; 
-        position: relative;		
+a, a:hover {
+	text-decoration: none;
+}
+
+	.title { 
+        padding: 110px 0px 35px 0px; 
+        position: relative;
+        background:transparent url('../images/YE-Studio-logo-small.png') center top 5px no-repeat;	
+	}
+	.title:hover{
+   		background-image: url('../images/YE-Studio-logo-small-black.png');
 	}
 
+	@media screen and (max-width: 767px) { 
+		.title { 
+        padding: 110px 0px 35px 0px; 
+        position: relative;
+        background:transparent url('../images/YE-Studio-logo-small.png') center top 5px no-repeat;	
+	}
+	.title:hover{
+   		background-image: url('../images/YE-Studio-logo-small-black.png');
+	}
+	}
+
+	
 	.title-home {
         text-align: center;
         text-transform: uppercase;
         font-size: 200px;
         font-weight: 5;
-        padding: 120px 0px 100px 0px; 
+        padding: 280px 0px 160px 0px; 
         position: relative;		
+		background:transparent url('../images/YE-Studio-logo.png') center top 180px no-repeat;	
 	}
+	.title-home:hover{
+   		background-image: url('../images/YE-Studio-logo-black.png');
+	}
+	@media screen and (max-width: 767px) { 
+		.title-home {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 200px;
+        font-weight: 5;
+        padding: 280px 0px 50px 0px; 
+        position: relative;		
+		background:transparent url('../images/YE-Studio-logo.png') center top 70px no-repeat;	
+	}
+	.title-home:hover{
+   		background-image: url('../images/YE-Studio-logo-black.png');
+	}
+	}
+	
 
 	.geometry {
 		z-index: 3;
@@ -641,18 +676,28 @@ a, a:hover {
 
 	.title-home-desc {
 		text-align: center;
-		color: #ccc;
+		color: #999;
 		font-size: 14px;
 		line-height: 18px;
 		position: relative;	
-		padding: 0px 60px 30px 60px; 
+		padding: 10px 45px 20px 45px; 
+	}
+	@media screen and (max-width: 767px) { 
+		.title-home-desc {
+		text-align: center;
+		color: #999;
+		font-size: 13px;
+		line-height: 16px;
+		position: relative;	
+		padding: 0px 45px 15px 45px; 
+	}
 	}
 
 	.title-desc {
 		text-align: center;
-		color: #ccc;
-		font-size: 14px;
-		line-height: 18px;
+		color: #999;
+		font-size: 12px;
+		line-height: 16px;
 		position: relative;	
 		padding: 0px 0px 30px 0px; 
 	}
