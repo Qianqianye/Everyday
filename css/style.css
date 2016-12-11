@@ -29,7 +29,7 @@ body {
 	/*font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
 	font-family: "Roboto", sans-serif;
 	font-size: 14px;
-	line-height: 18px;
+	line-height: 22px;
 	-webkit-font-smoothing: antialiased;
 	/* Fix for webkit rendering */
 	-webkit-text-size-adjust: 100%;
@@ -190,7 +190,7 @@ b, strong { font-weight: bold; }
 		.button.small,
 		a.button.small {
 			font-size: 14px;
-			line-height: 24px;
+			line-height: 22px;
 			padding: 16px 24px;
 			-webkit-border-radius: 3px;
 			-moz-border-radius: 3px;
@@ -585,7 +585,7 @@ a, a:hover {
 
 .socialbtns, .socialbtns ul, .socialbtns li {
   margin: 0;
-  padding: 5px;
+  padding: 5px 5px 15px 5px; 
 }
 
 .socialbtns li {
@@ -597,7 +597,8 @@ a, a:hover {
 	width: 40px;
     height: 28px;
 	color: #000;
-	background-color: #FFF;
+	/*background-color: #FFF;*/
+	background: rgba(255, 255, 255, 0.5);
 	border: 1px solid #000;
 	padding-top: 12px;
 	border-radius: 22px;
@@ -678,7 +679,7 @@ a, a:hover {
 		text-align: center;
 		color: #999;
 		font-size: 14px;
-		line-height: 18px;
+		line-height: 22px;
 		position: relative;	
 		padding: 10px 45px 20px 45px; 
 	}
@@ -886,6 +887,10 @@ a, a:hover {
 			width: 100%; 
 		}
 
+		img:hover {
+			opacity: 0.5;
+		}
+
 	@media screen and (min-width: 1600px) { 
 		#works.stackgrid .item { width: 20%; }
 	}
@@ -953,19 +958,26 @@ a, a:hover {
 	}
 
 		#works.single img { 
-			margin-bottom: 20px; 
+			margin-bottom: 20px;
+			min-width: 100%;
+			max-width: 100%;
+    		height: auto;
 		}
 
+
+
+
 		#works.single .box-info {
-			margin-bottom: 40px; 
+			margin-bottom: 20px; 
 			font-size: 14px;
-			line-height: 25px;
+			line-height: 22px;
 		}
 			
 			#works.single .box-info p.project-desc {
 				color: #ddd; 
 				font-weight: bold; 
 				margin-top: 0; 
+				margin-bottom: : 0;
 			}
 
 			#works.single .box-info h4 {
@@ -1471,14 +1483,14 @@ a, a:hover {
 
 		section#contact .box-contact {
 			font-size: 14px;
-			line-height: 28px;
+			line-height: 22px;
 			background-size: cover;
 		}
 
 			section#contact .box-contact h3 {
 				color: #22eedd;
 				font-size: 14px;
-				line-height: 24px;
+				line-height: 22px;
 				font-weight: normal;
 				margin-bottom: 15px;
 			}
