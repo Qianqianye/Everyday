@@ -1,6 +1,6 @@
       var _w=window.innerWidth;
       var _h=window.innerHeight;
-      
+
       var group;
       var container, controls, stats;
       var particlesData = [];
@@ -24,7 +24,6 @@
       var effectController = {
         morphing_speed:0.05,
         animate: true,
-        // showDots: false,
         showDots: true,
         showLines: true,
         anim_speed: 1,
@@ -38,7 +37,7 @@
       animate();
       initGUI();
 
-     
+
       var morphTarget=[];
       var startMorph;
       var morphStartedAt;
@@ -48,7 +47,7 @@
         var gui = new dat.GUI();
         gui.add( effectController, "limitConnections" );
         gui.add( effectController, "showLines" ).onChange( function( value ) { linesMesh.visible = value; } );
-        gui.add( effectController, "showDots" ).onChange( function( value ) { pointCloud.visible = value; } );     
+        gui.add( effectController, "showDots" ).onChange( function( value ) { pointCloud.visible = value; } );
         gui.add( effectController, "minDistance", 10, 300 );
         gui.add( effectController, "particleCount", 0, maxParticleCount, 1 ).onChange( function( value ) {
           particleCount = parseInt( value );
@@ -152,7 +151,7 @@
         linesMesh = new THREE.LineSegments( geometry, material );
         group.add( linesMesh );
 
-        
+
         renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( _w,_h );
@@ -184,19 +183,19 @@
       function intersect(cur_point,_target) {
 
         var direction =  new THREE.Vector3(0,0,0);
-        
+
         var startPoint = cur_point;
-        
+
         var directionVector = direction.sub( startPoint );
 
         var ray = new THREE.Raycaster(startPoint, directionVector.clone(). normalize());
-        
+
         scene.updateMatrixWorld(); // required, since you haven't rendered yet
-        
+
         var rayIntersects = ray.intersectObjects([_target], true);
-        
-        if (rayIntersects[0]) {    
-          return rayIntersects[0].point;          
+
+        if (rayIntersects[0]) {
+          return rayIntersects[0].point;
         }
         return null;
 
@@ -220,7 +219,7 @@
           }
 
         }
-        
+
         group.remove( _target );
 
       }
@@ -257,7 +256,7 @@
         var colorpos = 0;
         var numConnected = 0;
 
-        for ( var i = 0; i < particleCount; i++ )     
+        for ( var i = 0; i < particleCount; i++ )
           particlesData[ i ].numConnections = 0;
 
         for ( var i = 0; i < particleCount; i++ ) {
@@ -339,7 +338,7 @@
         linesMesh.geometry.attributes.position.needsUpdate = true;
         linesMesh.geometry.attributes.color.needsUpdate = true;
 
-     
+
         pointCloud.geometry.attributes.position.needsUpdate = true;
 
         requestAnimationFrame( animate );
@@ -386,7 +385,7 @@
 
       }
       // console.log(current_shape);
-     
+
     }
 
 
