@@ -4,7 +4,7 @@ var balls = [ammt];
 
 function setup() {
 	createCanvas(windowWidth,windowHeight);
-	background(0);
+	background(255);
   t = 0;
 	for(var i = 0; i <= ammt; i++){
 		balls[i] = new Fluid();
