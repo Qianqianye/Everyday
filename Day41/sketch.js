@@ -1,6 +1,7 @@
 var t;
 var ammt = 30;
 var balls = [ammt];
+var bg = false;
 
 function setup() {
 	createCanvas(windowWidth,windowHeight);
@@ -12,12 +13,29 @@ function setup() {
 }
 
 function draw() {
-  background(255,5);
+   if(bg){
+    background(255);
+  }
+  else{
+    background(255, 5);
+  }
 
 	for(var i = 0; i <= ammt; i++){
 		balls[i].display();
 		balls[i].move();
 }
+}
+
+function windowResized(){
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function keyPressed(){
+  switch (key) {
+    case ' ':
+      bg = !bg;
+      break;
+  }
 }
 
 function Fluid (){
