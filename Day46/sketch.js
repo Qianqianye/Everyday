@@ -24,8 +24,10 @@ function shanShui() {
 
 function curveLine(_index) {
 	var index = _index;
-	var base = random (width/4, width/2); 
-	var start = random (-width/2, width/2); 
+	var screen = 2000;
+	var screenHeight = 800;
+	var base = random (screen/4, screen/2); 
+	var start = random (-screen/2, screen/2); 
 
 	this.show = function (){
 			var ink = 20;
@@ -34,14 +36,11 @@ function curveLine(_index) {
 			fill(c);
     		stroke(c);
 
-			var xoffset = map(mouseX, 0,width, -100,100) * (index+1) ;
+			var xoffset = map(mouseX, 0,screen, -100,100) * (index+1) ;
 
 				 for (var x = start; x < base + start; x++) {
-
 				 	var mapLoc = map(x, start, base+start, 0, 1);
-
 				 	var edgePercent = .2;
-
 
 				 	if(mapLoc< edgePercent){
 				 		stroke(0,0,0,(mapLoc*(1/edgePercent))*ink);
@@ -50,18 +49,14 @@ function curveLine(_index) {
 				 		stroke(0,0,0,(inverseLoc*1/edgePercent)*ink);
 				 	}
 
-					var nx = map(x, 0, width, 0, 10);
-					var y = height * (noise(nx+index*10)*.7);
+					var nx = map(x, 0, screen, 0, 10);
+					var y = screenHeight * (noise(nx+index*10)*.7);
 					var xPos = x+ xoffset
 
-					line (xPos, y, xPos, y+(height-y)/2);
-					line (xPos, y, xPos, y+(height-y)/4);
-					line (xPos, y, xPos, y+(height-y)/8);
-					line (xPos, y, xPos, y+(height-y)/16);
-					
-
+					line (xPos, y, xPos, y+(screenHeight-y)/2);
+					line (xPos, y, xPos, y+(screenHeight-y)/4);
+					line (xPos, y, xPos, y+(screenHeight-y)/8);
+					line (xPos, y, xPos, y+(screenHeight-y)/16);	
 				 }
-
-
 	}
 }
