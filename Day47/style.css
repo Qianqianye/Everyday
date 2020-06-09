@@ -1,0 +1,405 @@
+body {
+  color: black;
+  font-family: "Calibre";
+  font-weight: light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  /*background: #ffffff;*/
+}
+
+.open-walkthrough {
+  border: 0;
+  background: #1c1c1c;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 12px;
+  height: 40px;
+  width: 120px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -20px;
+  margin-left: -60px;
+}
+
+.walkthrough {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.23), 0 10px 40px rgba(0, 0, 0, 0.19);
+  background: #ffffff;
+  border-radius: 0;
+  display: none;
+  flex-direction: column;  
+  flex: 0 0 auto;
+  font-size: 14px;
+  height: 464px;
+  overflow: hidden;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 480px;
+  z-index: 1000;
+}
+.walkthrough.show {
+  display: flex;
+  opacity: 0;
+  transform: translateY(72px);
+}
+.walkthrough.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+.walkthrough .walkthrough-body {
+  /*align-items: center;*/
+  justify-content: center;
+  display: flex;
+  flex: 1;
+  text-align: center;
+}
+.walkthrough .walkthrough-body .prev-screen,
+.walkthrough .walkthrough-body .next-screen {
+  /*align-self: stretch;*/
+  background: none;
+  border: 0;
+  margin-top: 40px;
+  color: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-size: 24px;
+  opacity: 1;
+  outline: none;
+  padding: 16px;
+  transform: scale(1);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1000;
+}
+.walkthrough .walkthrough-body .prev-screen:hover, .walkthrough .walkthrough-body .prev-screen:active,
+.walkthrough .walkthrough-body .next-screen:hover,
+.walkthrough .walkthrough-body .next-screen:active {
+  color: black;
+  transform-origin: center;
+  transform: scale(1.25);
+}
+.walkthrough .walkthrough-body .prev-screen:disabled,
+.walkthrough .walkthrough-body .next-screen:disabled {
+  opacity: 0;
+}
+.walkthrough .walkthrough-body .prev-screen {
+  order: 1;
+}
+.walkthrough .walkthrough-body .next-screen {
+  order: 3;
+}
+.walkthrough .walkthrough-body .screens {
+  flex: 1;
+  /*align-self: stretch;*/
+  position: relative;
+  margin: 0 -16px;
+  padding: 0;
+  order: 2;
+}
+.walkthrough .walkthrough-body .screens .screen {
+  position: absolute;
+  list-style-type: none;
+}
+.walkthrough .walkthrough-body .media {
+/*  background: rgba(0, 255, 255, 0.25);
+  border-radius: 132px;
+  height: 132px;
+  width: 132px;*/
+
+  margin: 32px auto;
+  
+}
+.walkthrough .walkthrough-body  h3 {
+  justify-content: center;
+  display: flex;
+  flex: 0 0 auto;
+  font-size: 16px;
+  line-height: 1.4em;
+  letter-spacing: 0.15em;
+  /*border: 1px solid red;*/
+}
+.walkthrough .walkthrough-body p {
+  line-height: 1.6em;
+  font-size: 13px;
+  margin-top: 220px;
+  padding-top: 0;
+  /*width: 240px;*/
+  /*border: 1px solid red;*/
+  color: rgba(0, 0, 0, 0.8);
+}
+.walkthrough .walkthrough-pagination {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+.walkthrough .walkthrough-pagination .dot {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  height: 8px;
+  margin: 0 4px;
+  transform: scale(0.75);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 8px;
+}
+.walkthrough .walkthrough-pagination .dot.active {
+  background: black;
+  transform: scale(1);
+  transition-delay: 0.4s;
+}
+.walkthrough .walkthrough-footer {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-around;
+  padding: 0;
+}
+.walkthrough .walkthrough-footer button {
+  height: 40px;
+  border: 0;
+  background: #636363;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-radius: 0;
+  color: white;
+  flex: 1;
+  font-size: 12px;
+  margin: 0;
+  outline: 0;
+  padding: 12px;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+}
+.walkthrough .walkthrough-footer button:hover {
+  background: #303030;
+}
+.walkthrough .walkthrough-footer button:active {
+  background: #c5c6c7;
+}
+.walkthrough .walkthrough-footer button:disabled {
+  cursor: pointer;
+}
+.walkthrough .walkthrough-footer button.finish {
+  background: #636363;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  opacity: 0;
+  transform: scale(0, 1);
+  transform-origin: center;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.walkthrough .walkthrough-footer button.finish:hover {
+  background: #303030;
+}
+.walkthrough .walkthrough-footer button.finish:active {
+  background: #c5c6c7;
+}
+.walkthrough .walkthrough-footer button.finish.active {
+  transform: scale(1, 1);
+  opacity: 1;
+}
+.walkthrough .screens {
+  margin: 0;
+}
+.walkthrough .screens .media .status-badge {
+  left: 136px;
+  opacity: 0;
+  position: absolute;
+  top: 104px;
+  transform: scale(0);
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .media .status-badge i {
+  display: inline;
+}
+/*.walkthrough .screens .media.logo .logo {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(-60px);
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 80px;
+}*/
+
+.walkthrough .screens .media.logo {
+
+  position: absolute;
+  opacity: 0;
+  align-content: center;
+  transform: translateY(-30px);
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 220px;
+  /*height: 140px;*/
+  left: 100px;
+  top: 70px;
+}
+
+
+.walkthrough .screens .media .icon {
+
+  position: absolute;
+  opacity: 0;
+  align-content: center;
+  transform: translateY(-30px);
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 220px;
+  /*height: 140px;*/
+  left: 100px;
+  top: 70px;
+}
+/*.walkthrough .screens .media.bars .icon {
+  transform: translate(40px, 20px);
+}
+.walkthrough .screens .media.bars .icon:nth-of-type(2) {
+  transform: scale(0.25);
+  transform-origin: 30% 54%;
+}
+.walkthrough .screens .media.bars .icon:nth-of-type(3) {
+  transform: scale(0.25);
+  transform-origin: 30% 40%;
+}
+.walkthrough .screens .media.bars .icon:nth-of-type(4) {
+  transform: scale(0.25);
+  transform-origin: 30% 26%;
+}
+.walkthrough .screens .media.files .icon {
+  transform: translate(40px, 20px);
+}
+.walkthrough .screens .media.comm .icon {
+  transform: scale(0.25);
+  transform-origin: 29% 73%;
+}
+.walkthrough .screens .media.comm .icon:nth-child(2) {
+  transform-origin: 66% 85%;
+}*/
+
+
+.walkthrough .screens .screen {
+  opacity: 0;
+  position: absolute;
+  /*transform: translateX(-72px);*/
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.walkthrough .screens .screen.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transition-delay: 0.4s;
+}
+.walkthrough .screens .screen.active ~ .screen {
+  opacity: 0;
+  /*transform: translateX(72px);*/
+}
+.walkthrough .screens .screen.active .media .status-badge {
+  opacity: 1;
+  transform: scale(1.75);
+}
+
+/*.walkthrough .screens .screen.active .media.logo .logo {
+  opacity: 0.8;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .screen.active .media.logo .status-badge {
+  transition-delay: 1s;
+}*/
+
+.walkthrough .screens .screen.active .media.logo .icon {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .screen.active .media.logo .icon:nth-child(2) {
+  transition-delay: 0.725s;
+}
+.walkthrough .screens .screen.active .media.logo .icon:nth-child(3) {
+  transition-delay: 0.850s;
+}
+.walkthrough .screens .screen.active .media.logo .status-badge {
+  transition-delay: 1.4s;
+}
+
+
+.walkthrough .screens .screen.active .media.object .icon {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .screen.active .media.object .icon:nth-child(2) {
+  transition-delay: 0.725s;
+}
+.walkthrough .screens .screen.active .media.object .icon:nth-child(3) {
+  transition-delay: 0.850s;
+}
+.walkthrough .screens .screen.active .media.object .status-badge {
+  transition-delay: 1.4s;
+}
+
+
+.walkthrough .screens .screen.active .media.books .icon {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .screen.active .media.books .icon:nth-child(2) {
+  transition-delay: 0.725s;
+}
+.walkthrough .screens .screen.active .media.books .icon:nth-child(3) {
+  transition-delay: 0.850s;
+}
+.walkthrough .screens .screen.active .media.books .status-badge {
+  transition-delay: 1.4s;
+}
+
+
+.walkthrough .screens .screen.active .media.bars .icon {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+.walkthrough .screens .screen.active .media.bars .icon:nth-child(3) {
+  transition-delay: 0.8s;;
+}
+.walkthrough .screens .screen.active .media.bars .icon:nth-child(2) {
+  transition-delay: 0.7s;
+}
+.walkthrough .screens .screen.active .media.bars .icon:nth-child(1) {
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .screen.active .media.bars .status-badge {
+  transition-delay: 1.6s;
+}
+
+
+.walkthrough .screens .screen.active .media.files .icon {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+.walkthrough .screens .screen.active .media.files .icon:nth-child(3) {
+  transition-delay: 0.8s;
+}
+.walkthrough .screens .screen.active .media.files .icon:nth-child(2) {
+  transition-delay: 0.7s;
+}
+.walkthrough .screens .screen.active .media.files .icon:nth-child(1) {
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .screen.active .media.files .status-badge {
+  transition-delay: 1.6s;
+}
+.walkthrough .screens .screen.active .media.comm .icon {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.6s;
+}
+.walkthrough .screens .screen.active .media.comm .icon:nth-child(2) {
+  transition-delay: 0.8s;
+}
+.walkthrough .screens .screen.active .media.comm .status-badge {
+  transition-delay: 1.6s;
+}
