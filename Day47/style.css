@@ -15,6 +15,7 @@ body {
   border: 0;
   background: #1c1c1c;
   font-weight: bold;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: 12px;
@@ -77,7 +78,7 @@ body {
 .walkthrough .walkthrough-body .prev-screen:hover, .walkthrough .walkthrough-body .prev-screen:active,
 .walkthrough .walkthrough-body .next-screen:hover,
 .walkthrough .walkthrough-body .next-screen:active {
-  color: black;
+  color: white;
   transform-origin: center;
   transform: scale(1.25);
 }
