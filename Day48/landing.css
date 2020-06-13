@@ -19,18 +19,18 @@ body {
     border-radius: 0px;
     font-size: 14px;
     height: 460px;
-    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     width: 460px;
+    /*border:1px solid #ccc;*/
+    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
 }
-
 
 a {
-    font-family: sans-serif;
     color: #444;
+    /*font-weight: light;*/
     text-decoration: none;
-    font-size: 20px;
+    font-size: 30px;
 }
-
 
 #close {
     float: right;
@@ -43,17 +43,40 @@ h5 {
   margin-top: 50px;
   margin-left: 30px;
   margin-right: 30px;
-  padding-top: 0;
   color: rgba(255,255,255,0.9);
-
 }
-
 
 p {
   line-height: 1.3em;
   font-size: 15px;
   margin-left: 30px;
   margin-right: 30px;
-  padding-top: 0;
   color: rgba(255,255,255,0.9);
+}
+
+ button {
+  /*text-transform: uppercase;*/
+  outline: 0;
+  background: #3D41FF;
+  width: 170px;
+  border: 0;
+  margin-top: 10px;
+  margin-left: 30px;
+  padding: 12px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+ button:hover, button:active, button:focus {
+  background: #1B1E8E;
+}
+ button.inactive {
+  background: #000;
+  color: #7d7d7d;
+}
+
+ button.inactive:hover{
+  color: #fff;
 }
